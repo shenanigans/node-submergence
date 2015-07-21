@@ -8,8 +8,8 @@ var filth        = require ('filth');
 var Transport    = require ('./lib/Transport');
 var Backplane    = require ('./lib/Backplane');
 
-module.exports.Agent = require ('./lib/Agent');
-module.exports.Reply = require ('./lib/Reply');
+var Agent = require ('./lib/Agent');
+var Reply = require ('./lib/Reply');
 
 
 /**     @module/class submergence
@@ -33,6 +33,8 @@ function submergence (config) {
 }
 util.inherits (submergence, EventEmitter);
 module.exports = submergence;
+module.exports.Agent = Agent;
+module.exports.Reply = Reply;
 
 /**     @struct submergence.Configuration
     Configuration options for the [submergence]() service layer.
@@ -105,6 +107,7 @@ var DEFAULT_CONFIG = {
         maxDuration:            1000 * 60 * 60 // 1 hour
     }
 };
+submergence.DEFAULT_CONFIG = DEFAULT_CONFIG;
 
 /**     @member/Function listen
 
@@ -221,4 +224,12 @@ submergence.prototype.listen = function (port, router, callback) {
             }
         ], finalize);
     });
+};
+
+submergence.prototype.sendEvent = function (domain, user, client, info, callback) {
+    this.backplane.sendEvent (domain, user, client, info, callback);
+};
+
+submergence.prototype.isActive = function (domain, user, client, callback) {
+    this.backplane.isActive (domain, user, client, callback);
 };

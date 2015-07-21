@@ -1,6 +1,6 @@
 submergence
 ===========
-Client authentication and messaging backplane layer.
+Client authentication and messaging backplane service API.
 
 Application Notes
 -----------------
